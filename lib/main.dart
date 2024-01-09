@@ -1,25 +1,8 @@
-import 'package:cross_platform_app/presentation/home_page.dart';
+import 'package:cross_platform_app/app.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Cross Platform App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const HomePage(
-        title: 'Cross Platform App',
-      ),
-    );
-  }
+  runApp(
+    const App(),
+  );
 }
