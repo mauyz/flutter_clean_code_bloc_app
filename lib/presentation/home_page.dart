@@ -11,19 +11,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Cross Platform App"),
-      ),
       body: const Center(
         child: Text(
           'Hello flutter',
         ),
       ),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+
+        },
         tooltip: 'Add',
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

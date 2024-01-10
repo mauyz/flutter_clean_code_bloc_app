@@ -17,9 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
       logo: Image.asset(
         Assets.assetsIcLauncher,
       ),
-      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       durationInSeconds: 5,
-      loaderColor: Theme.of(context).colorScheme.secondary,
       navigator: const HomePage(),
     );
   }
