@@ -1,5 +1,5 @@
 class KeyConstants {
-  KeyConstants._();
+  const KeyConstants._();
 
   static const accessToken = "ACCESS_TOKEN";
 }
