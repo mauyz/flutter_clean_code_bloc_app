@@ -2,7 +2,7 @@ import 'package:cross_platform_app/core/constants/error_constants.dart';
 import 'package:equatable/equatable.dart';
 
 class Failure extends Equatable {
-  final String code;
+  final int code;
 
   const Failure({required this.code});
 
