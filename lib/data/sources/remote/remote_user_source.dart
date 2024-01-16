@@ -1,14 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cross_platform_app/core/constants/error_constants.dart';
 import 'package:cross_platform_app/core/error/exceptions.dart';
 import 'package:cross_platform_app/data/sources/remote/api/api_client.dart';
+import 'package:cross_platform_app/data/sources/remote/api/api_constants.dart';
 import 'package:cross_platform_app/domain/entities/user.dart';
 import 'package:dio/dio.dart';
 
 abstract class RemoteUserSource {
   Future<User> login(String email, String password);
-  Future<bool> logOut(User user);
+  Future logOut();
 }
 
 class RemoteUserSourceImpl implements RemoteUserSource {
@@ -21,38 +23,48 @@ class RemoteUserSourceImpl implements RemoteUserSource {
   @override
   Future<User> login(String email, String password) async {
     try {
-      final response = await apiClient.postData(
-        "/authaccount/login",
+      final result = await apiClient.postData(
+        ApiConstants.login,
         {
           "email": email,
           "password": password,
         },
       );
 
-      if (response.statusCode == 200) {
-        final data = response.data;
-
-        if (data != null) {
-          final json = jsonDecode(data);
-          final user = User(id: "id", email: email, name: "name");
+      if (result.statusCode == 200) {
+        final responseBody = result.data;
+        if (responseBody != null) {
+          final json = jsonDecode(responseBody);
+          if (json["data"] != null) {
+            final data = Map<String, dynamic>.from(json["data"]);
+            final token = data["Token"] as String;
+            await apiClient.saveToken(token);
+            return User(
+              id: data["Id"] as int,
+              email: data["Email"] as String,
+              name: data["Name"] as String,
+            );
+          } else {
+            throw ServerException(code: ErrorConstants.inputIncorrect);
+          }
         } else {
-          throw ServerException(code: response.statusCode?.toString() ?? '');
+          throw ServerException(
+            code: ErrorConstants.dataIncorrect,
+          );
         }
       }
     } on DioException catch (e) {
-      throw ServerException(code: e.response?.statusCode?.toString() ?? '');
-    } on SocketException {
+      throw ServerException(
+        code: e.response?.statusCode ?? ErrorConstants.unknownError,
+      );
+    } on IOException {
       throw InternetException();
     }
+    throw UnknownException();
   }
 
   @override
-  Future<bool> logOut(User user) {
-    // TODO: implement logOut
-    throw UnimplementedError();
+  Future logOut() async {
+    await apiClient.deleteToken();
   }
-}
-
-Map<String, dynamic> parseAndDecode(String response) {
-  return jsonDecode(response) as Map<String, dynamic>;
 }

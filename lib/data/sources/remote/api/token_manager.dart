@@ -14,10 +14,12 @@ class TokenManager {
   }
 
   Future saveAccessToken(String token) async {
+    _accessToken = token;
     await secureStorage.write(key: KeyConstants.accessToken, value: token);
   }
 
   Future deleteToken() async {
+    _accessToken = null;
     await secureStorage.delete(key: KeyConstants.accessToken);
   }
 }

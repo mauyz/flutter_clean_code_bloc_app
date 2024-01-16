@@ -1,3 +1,4 @@
+import 'package:cross_platform_app/data/sources/remote/api/api_constants.dart';
 import 'package:cross_platform_app/data/sources/remote/api/token_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ class ApiClient {
   final TokenManager tokenManager;
   final dio = Dio(
     BaseOptions(
-      baseUrl: "http://restapi.adequateshop.com/api",
+      baseUrl: ApiConstants.baseUrl,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
     ),
@@ -50,5 +51,13 @@ class ApiClient {
     Map<String, dynamic> data,
   ) async {
     return dio.get<String>(endPoint, data: data);
+  }
+
+  Future saveToken(String token) async {
+    await tokenManager.saveAccessToken(token);
+  }
+
+  Future deleteToken() async {
+    await tokenManager.deleteToken();
   }
 }
