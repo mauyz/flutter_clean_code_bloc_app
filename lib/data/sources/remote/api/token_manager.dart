@@ -17,6 +17,10 @@ class TokenManager {
     return _accessToken;
   }
 
+  Future<bool> hasToken() async {
+    return (await getAccessToken()) != null;
+  }
+
   Future saveAccessToken(String token) async {
     _accessToken = token;
     await _secureStorage.write(key: KeyConstants.accessToken, value: token);
