@@ -7,12 +7,14 @@ import 'package:cross_platform_app/data/sources/remote/api/api_client.dart';
 import 'package:cross_platform_app/data/sources/remote/api/api_constants.dart';
 import 'package:cross_platform_app/domain/entities/user.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 abstract class RemoteUserSource {
   Future<User> login(String email, String password);
   Future logOut();
 }
 
+@LazySingleton(as: RemoteUserSource)
 class RemoteUserSourceImpl implements RemoteUserSource {
   final ApiClient apiClient;
 

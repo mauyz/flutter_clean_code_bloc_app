@@ -6,7 +6,9 @@ import 'package:cross_platform_app/data/sources/remote/remote_user_source.dart';
 import 'package:cross_platform_app/domain/entities/user.dart';
 import 'package:cross_platform_app/domain/repositories/user_reposiory.dart';
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: UserRepository)
 class UserRepositoryImpl implements UserRepository {
   final RemoteUserSource remoteUserSource;
 

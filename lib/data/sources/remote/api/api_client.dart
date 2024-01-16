@@ -2,7 +2,9 @@ import 'package:cross_platform_app/data/sources/remote/api/api_constants.dart';
 import 'package:cross_platform_app/data/sources/remote/api/token_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class ApiClient {
   final TokenManager tokenManager;
   final dio = Dio(
