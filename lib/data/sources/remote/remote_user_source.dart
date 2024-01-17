@@ -3,14 +3,14 @@ import 'dart:io';
 
 import 'package:cross_platform_app/core/constants/error_constants.dart';
 import 'package:cross_platform_app/core/error/exceptions.dart';
+import 'package:cross_platform_app/data/models/user_model.dart';
 import 'package:cross_platform_app/data/sources/remote/api/api_client.dart';
 import 'package:cross_platform_app/data/sources/remote/api/api_constants.dart';
-import 'package:cross_platform_app/domain/entities/user.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class RemoteUserSource {
-  Future<User> login(String email, String password);
+  Future<UserModel> login(String email, String password);
   Future logOut();
 }
 
@@ -23,7 +23,7 @@ class RemoteUserSourceImpl implements RemoteUserSource {
   });
 
   @override
-  Future<User> login(String email, String password) async {
+  Future<UserModel> login(String email, String password) async {
     try {
       final result = await apiClient.postData(
         ApiConstants.login,
@@ -41,7 +41,7 @@ class RemoteUserSourceImpl implements RemoteUserSource {
             final data = Map<String, dynamic>.from(json["data"]);
             final token = data["Token"] as String;
             await apiClient.saveToken(token);
-            return User(
+            return UserModel(
               id: data["Id"] as int,
               email: data["Email"] as String,
               name: data["Name"] as String,
