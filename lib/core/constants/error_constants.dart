@@ -4,6 +4,7 @@ class ErrorConstants {
   static const unknownError = -1;
   static const inputIncorrect = 401;
   static const dataIncorrect = 402;
+  static const requestInvalid = 403;
   static const notFound = 404;
   static const serverError = 500;
   static const connexionError = 505;
@@ -12,6 +13,7 @@ class ErrorConstants {
     unknownError: "Unknown error",
     inputIncorrect: "Invalid username or password",
     dataIncorrect: "Invalid response",
+    requestInvalid: "Invalid request",
     notFound: "No found",
     serverError: "Server internal error",
     connexionError: "Internet problem",
