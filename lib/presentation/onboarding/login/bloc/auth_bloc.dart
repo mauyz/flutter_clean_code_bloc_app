@@ -13,10 +13,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LogOutUseCase logOutUseCase;
 
   AuthBloc({
+    AuthState? initialState,
     required this.loginUseCase,
     required this.logOutUseCase,
   }) : super(
-          const UnAuthenticated(),
+          initialState ?? const UnAuthenticated(),
         ) {
     on<LogInEvent>(_logInEventHandler);
     on<LogOutEvent>(_logOutEventHandler);
@@ -33,6 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _logOutEventHandler(LogOutEvent event, Emitter<AuthState> emit) async {
     emit(const AuthSubmitting());
     await logOutUseCase();
+    await Future.delayed(const Duration(seconds: 2));
     emit(const UnAuthenticated());
   }
 }
