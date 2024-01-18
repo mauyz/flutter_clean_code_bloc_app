@@ -5,10 +5,10 @@ import 'package:cross_platform_app/domain/repositories/user_reposiory.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class Login implements UseCaseWithParams<User, (String, String)> {
+class LoginUseCase implements UseCaseWithParams<User, (String, String)> {
   final UserRepository userRepository;
 
-  Login({
+  LoginUseCase({
     required this.userRepository,
   });
 

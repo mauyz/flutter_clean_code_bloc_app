@@ -1,11 +1,13 @@
 import 'package:cross_platform_app/core/typedef.dart';
 import 'package:cross_platform_app/core/usecase.dart';
 import 'package:cross_platform_app/domain/repositories/user_reposiory.dart';
+import 'package:injectable/injectable.dart';
 
-class LogOut implements UseCaseWithoutParams {
+@lazySingleton
+class LogOutUseCase implements UseCaseWithoutParams {
   final UserRepository userRepository;
 
-  LogOut({required this.userRepository});
+  LogOutUseCase({required this.userRepository});
 
   @override
   ResultFuture call() {
