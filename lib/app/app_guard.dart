@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cross_platform_app/data/sources/remote/api/token_manager.dart';
+import 'package:cross_platform_app/data/sources/local/token_manager.dart';
 import 'package:cross_platform_app/services/dependecy_injection.dart';
 
 class AppGuard extends AutoRouteGuard {
