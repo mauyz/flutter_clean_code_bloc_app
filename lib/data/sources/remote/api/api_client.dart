@@ -1,7 +1,7 @@
 import 'package:cross_platform_app/core/constants/error_constants.dart';
 import 'package:cross_platform_app/core/error/exceptions.dart';
 import 'package:cross_platform_app/data/sources/remote/api/api_constants.dart';
-import 'package:cross_platform_app/data/sources/remote/api/token_manager.dart';
+import 'package:cross_platform_app/data/sources/local/token_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
