@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cross_platform_app/app/app_router.dart';
 import 'package:cross_platform_app/domain/usecases/user/log_out_usecase.dart';
 import 'package:cross_platform_app/domain/usecases/user/login_usecase.dart';
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart';
@@ -65,9 +66,8 @@ class LoginPage extends StatelessWidget {
                         );
                       }
                       if (state is Authenticated) {
-                        displaySnackBar(
-                          context,
-                          state.user.name,
+                        context.router.popAndPush(
+                          HomeRoute(user: state.user),
                         );
                       }
                     },
