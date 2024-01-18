@@ -18,7 +18,10 @@ import 'package:cross_platform_app/data/sources/remote/remote_user_source.dart'
     as _i5;
 import 'package:cross_platform_app/domain/repositories/user_reposiory.dart'
     as _i6;
-import 'package:cross_platform_app/domain/usecases/user/login.dart' as _i8;
+import 'package:cross_platform_app/domain/usecases/user/log_out_usecase.dart'
+    as _i8;
+import 'package:cross_platform_app/domain/usecases/user/login_usecase.dart'
+    as _i9;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -40,8 +43,10 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i5.RemoteUserSourceImpl(apiClient: gh<_i4.ApiClient>()));
     gh.lazySingleton<_i6.UserRepository>(() =>
         _i7.UserRepositoryImpl(remoteUserSource: gh<_i5.RemoteUserSource>()));
-    gh.lazySingleton<_i8.Login>(
-        () => _i8.Login(userRepository: gh<_i6.UserRepository>()));
+    gh.lazySingleton<_i8.LogOutUseCase>(
+        () => _i8.LogOutUseCase(userRepository: gh<_i6.UserRepository>()));
+    gh.lazySingleton<_i9.LoginUseCase>(
+        () => _i9.LoginUseCase(userRepository: gh<_i6.UserRepository>()));
     return this;
   }
 }
