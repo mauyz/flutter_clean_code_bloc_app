@@ -1,6 +1,6 @@
 import 'package:cross_platform_app/core/typedef.dart';
 import 'package:cross_platform_app/core/usecase.dart';
-import 'package:cross_platform_app/domain/repositories/user_reposiory.dart';
+import 'package:cross_platform_app/domain/repositories/user_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
