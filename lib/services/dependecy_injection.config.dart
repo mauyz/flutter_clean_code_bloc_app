@@ -16,7 +16,7 @@ import 'package:cross_platform_app/data/sources/remote/api/token_manager.dart'
     as _i3;
 import 'package:cross_platform_app/data/sources/remote/remote_user_source.dart'
     as _i5;
-import 'package:cross_platform_app/domain/repositories/user_reposiory.dart'
+import 'package:cross_platform_app/domain/repositories/user_repository.dart'
     as _i6;
 import 'package:cross_platform_app/domain/usecases/user/log_out_usecase.dart'
     as _i8;
