@@ -1,3 +1,5 @@
+import 'package:cross_platform_app/core/constants/error_constants.dart';
+import 'package:cross_platform_app/core/error/exceptions.dart';
 import 'package:cross_platform_app/data/sources/remote/api/api_constants.dart';
 import 'package:cross_platform_app/data/sources/remote/api/token_manager.dart';
 import 'package:dio/dio.dart';
@@ -41,18 +43,60 @@ class ApiClient {
     );
   }
 
-  Future<Response<String>> postData(
-    String endPoint,
-    Map<String, dynamic> data,
-  ) async {
-    return dio.post<String>(endPoint, data: data);
+  Future<String> postData({
+    required String endPoint,
+    Map<String, dynamic>? params,
+  }) async {
+    try {
+      final result = await dio.post<String>(
+        endPoint,
+        data: params,
+      );
+
+      if (result.statusCode == 200) {
+        final data = result.data;
+        if (data != null) {
+          return data;
+        } else {
+          throw ApiException(
+            code: ErrorConstants.dataIncorrect,
+          );
+        }
+      }
+    } on DioException catch (e) {
+      throw ApiException(
+        code: e.response?.statusCode ?? ErrorConstants.unknownError,
+      );
+    }
+    throw UnknownException();
   }
 
-  Future<Response<String>> getData(
-    String endPoint,
-    Map<String, dynamic> data,
-  ) async {
-    return dio.get<String>(endPoint, data: data);
+  Future<String> getData({
+    required String endPoint,
+    Map<String, dynamic>? params,
+  }) async {
+    try {
+      final result = await dio.get<String>(
+        endPoint,
+        data: params,
+      );
+
+      if (result.statusCode == 200) {
+        final data = result.data;
+        if (data != null) {
+          return data;
+        } else {
+          throw ApiException(
+            code: ErrorConstants.dataIncorrect,
+          );
+        }
+      }
+    } on DioException catch (e) {
+      throw ApiException(
+        code: e.response?.statusCode ?? ErrorConstants.unknownError,
+      );
+    }
+    throw UnknownException();
   }
 
   Future saveToken(String token) async {
