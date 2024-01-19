@@ -1,4 +1,4 @@
-import 'package:cross_platform_app/services/dependecy_injection.config.dart';
+import 'package:cross_platform_app/services/dependency_injection.config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
@@ -9,4 +9,4 @@ final getIt = GetIt.instance;
   preferRelativeImports: false,
   asExtension: true,
 )
-void configureDependecies() => getIt.init();
+Future configureDependecies() => getIt.init();
