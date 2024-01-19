@@ -77,4 +77,15 @@ class UserRepositoryImpl implements UserRepository {
       );
     }
   }
+
+  @override
+  ResultFuture<User?> getLoggedUser() async {
+    final userId = await localeUserSource.getLoggedUserId();
+    if (userId != null) {
+      return Right(
+        User(id: userId, email: '', name: ''),
+      );
+    }
+    return const Right(null);
+  }
 }
