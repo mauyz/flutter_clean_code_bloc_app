@@ -22,7 +22,7 @@ class _PasswordInputState extends State<PasswordInput> {
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(10),
+            Radius.circular(8),
           ),
         ),
         labelText: "Password",

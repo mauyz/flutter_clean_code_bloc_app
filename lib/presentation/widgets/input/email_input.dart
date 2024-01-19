@@ -16,7 +16,7 @@ class EmailInput extends StatelessWidget {
       decoration: const InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(10),
+            Radius.circular(8),
           ),
         ),
         labelText: "Email",
