@@ -6,6 +6,7 @@ class ErrorConstants {
   static const dataIncorrect = 402;
   static const requestInvalid = 403;
   static const notFound = 404;
+  static const alreadyInUse = 405;
   static const serverError = 500;
   static const connexionError = 505;
 
@@ -15,6 +16,7 @@ class ErrorConstants {
     dataIncorrect: "Invalid response",
     requestInvalid: "Invalid request",
     notFound: "No found",
+    alreadyInUse: "The email is already in use",
     serverError: "Server internal error",
     connexionError: "Internet problem",
   };
