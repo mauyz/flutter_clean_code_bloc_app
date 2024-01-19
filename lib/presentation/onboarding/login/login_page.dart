@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cross_platform_app/app/app_router.dart';
-import 'package:cross_platform_app/domain/usecases/user/log_out_usecase.dart';
-import 'package:cross_platform_app/domain/usecases/user/login_usecase.dart';
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart';
 import 'package:cross_platform_app/presentation/widgets/button/submit_button.dart';
 import 'package:cross_platform_app/presentation/widgets/input/email_input.dart';
@@ -52,10 +50,7 @@ class LoginPage extends StatelessWidget {
                   height: 30,
                 ),
                 BlocProvider<AuthBloc>(
-                  create: (_) => AuthBloc(
-                    loginUseCase: getIt.get<LoginUseCase>(),
-                    logOutUseCase: getIt.get<LogOutUseCase>(),
-                  ),
+                  create: (_) => getIt.get<AuthBloc>(),
                   child: BlocConsumer<AuthBloc, AuthState>(
                     listener: (_, state) {
                       if (state is AuthenticatedFailed) {

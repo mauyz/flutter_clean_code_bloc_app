@@ -4,21 +4,20 @@ import 'package:cross_platform_app/domain/usecases/user/log_out_usecase.dart';
 import 'package:cross_platform_app/domain/usecases/user/login_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 part 'auth_state.dart';
 part 'auth_event.dart';
 
+@injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final LogOutUseCase logOutUseCase;
 
   AuthBloc({
-    AuthState? initialState,
     required this.loginUseCase,
     required this.logOutUseCase,
-  }) : super(
-          initialState ?? const UnAuthenticated(),
-        ) {
+  }) : super(const UnAuthenticated()) {
     on<LogInEvent>(_logInEventHandler);
     on<LogOutEvent>(_logOutEventHandler);
   }

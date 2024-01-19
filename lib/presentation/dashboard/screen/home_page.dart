@@ -1,9 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cross_platform_app/app/app_router.dart';
 import 'package:cross_platform_app/domain/entities/user.dart';
-import 'package:cross_platform_app/domain/usecases/user/get_user_by_id.dart';
-import 'package:cross_platform_app/domain/usecases/user/log_out_usecase.dart';
-import 'package:cross_platform_app/domain/usecases/user/login_usecase.dart';
 import 'package:cross_platform_app/presentation/dashboard/bloc/get_user_bloc.dart';
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart';
 import 'package:cross_platform_app/services/dependency_injection.dart';
@@ -29,16 +26,10 @@ class _HomePageState extends State<HomePage> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<GetUserBloc>(
-          create: (_) => GetUserBloc(
-            gettUserById: getIt.get<GettUserById>(),
-          ),
+          create: (_) => getIt.get<GetUserBloc>(),
         ),
         BlocProvider<AuthBloc>(
-          create: (_) => AuthBloc(
-            initialState: Authenticated(user: user),
-            loginUseCase: getIt.get<LoginUseCase>(),
-            logOutUseCase: getIt.get<LogOutUseCase>(),
-          ),
+          create: (_) => getIt.get<AuthBloc>(),
         ),
       ],
       child: Builder(
@@ -124,18 +115,18 @@ class _HomePageState extends State<HomePage> {
                       }
                     },
                     builder: (_, state) {
-                      if (state is Authenticated) {
-                        return FloatingActionButton(
-                          onPressed: () {
-                            buildContext
-                                .read<AuthBloc>()
-                                .add(const LogOutEvent());
-                          },
-                          tooltip: 'Log out',
-                          child: const Icon(Icons.logout),
-                        );
+                      if (state is AuthSubmitting) {
+                        return const CircularProgressIndicator();
                       }
-                      return const CircularProgressIndicator();
+                      return FloatingActionButton(
+                        onPressed: () {
+                          buildContext
+                              .read<AuthBloc>()
+                              .add(const LogOutEvent());
+                        },
+                        tooltip: 'Log out',
+                        child: const Icon(Icons.logout),
+                      );
                     },
                   ),
                 );

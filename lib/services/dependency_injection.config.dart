@@ -13,9 +13,9 @@ import 'package:cross_platform_app/data/repositories/user_repository_impl.dart'
 import 'package:cross_platform_app/data/sources/local/local_user_source.dart'
     as _i7;
 import 'package:cross_platform_app/data/sources/local/preference_storage.dart'
-    as _i17;
+    as _i19;
 import 'package:cross_platform_app/data/sources/local/secure_storage.dart'
-    as _i16;
+    as _i18;
 import 'package:cross_platform_app/data/sources/local/token_manager.dart'
     as _i5;
 import 'package:cross_platform_app/data/sources/remote/api/api_client.dart'
@@ -32,6 +32,10 @@ import 'package:cross_platform_app/domain/usecases/user/log_out_usecase.dart'
     as _i13;
 import 'package:cross_platform_app/domain/usecases/user/login_usecase.dart'
     as _i14;
+import 'package:cross_platform_app/presentation/dashboard/bloc/get_user_bloc.dart'
+    as _i17;
+import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart'
+    as _i16;
 import 'package:cross_platform_app/presentation/onboarding/splash/bloc/splash_bloc.dart'
     as _i15;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i3;
@@ -79,10 +83,16 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i14.LoginUseCase(userRepository: gh<_i9.UserRepository>()));
     gh.factory<_i15.SplashBloc>(
         () => _i15.SplashBloc(getLoggedUser: gh<_i11.GetLoggedUser>()));
+    gh.factory<_i16.AuthBloc>(() => _i16.AuthBloc(
+          loginUseCase: gh<_i14.LoginUseCase>(),
+          logOutUseCase: gh<_i13.LogOutUseCase>(),
+        ));
+    gh.factory<_i17.GetUserBloc>(
+        () => _i17.GetUserBloc(gettUserById: gh<_i12.GettUserById>()));
     return this;
   }
 }
 
-class _$SecureStorage extends _i16.SecureStorage {}
+class _$SecureStorage extends _i18.SecureStorage {}
 
-class _$PreferenceStorage extends _i17.PreferenceStorage {}
+class _$PreferenceStorage extends _i19.PreferenceStorage {}
