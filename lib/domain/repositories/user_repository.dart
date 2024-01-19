@@ -5,7 +5,7 @@ abstract class UserRepository {
   const UserRepository();
   ResultFuture<User?> getLoggedUser();
   ResultFuture<User> login(String email, String password);
-  ResultFuture<User> register(String email, String password);
+  ResultFuture<User> register(Map<String, dynamic> data);
   ResultFuture<User> getUserById(int id);
   ResultFuture logOut();
 }

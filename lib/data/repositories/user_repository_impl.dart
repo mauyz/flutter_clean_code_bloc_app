@@ -55,9 +55,22 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  ResultFuture<User> register(String email, String password) {
-    // TODO: implement register
-    throw UnimplementedError();
+  ResultFuture<User> register(Map<String, dynamic> data) async {
+    try {
+      final user = await remoteUserSource.register(data);
+      await localeUserSource.saveLoggedUserId(user.id);
+      return Right(user);
+    } on ApiException catch (e) {
+      return Left(
+        Failure(code: e.code),
+      );
+    } on UnknownException {
+      return const Left(
+        Failure(
+          code: ErrorConstants.unknownError,
+        ),
+      );
+    }
   }
 
   @override

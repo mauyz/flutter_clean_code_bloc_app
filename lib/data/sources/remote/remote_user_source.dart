@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 
 abstract class RemoteUserSource {
   Future<UserModel> login(String email, String password);
-  Future<UserModel> register(UserModel userModel);
+  Future<UserModel> register(Map<String, dynamic> data);
   Future<UserModel> getUserById(int id);
   Future logOut();
 }
@@ -51,9 +51,17 @@ class RemoteUserSourceImpl implements RemoteUserSource {
   }
 
   @override
-  Future<UserModel> register(UserModel userModel) {
-    // TODO: implement register
-    throw UnimplementedError();
+  Future<UserModel> register(Map<String, dynamic> data) async {
+    final result = await apiClient.postData(
+      endPoint: ApiConstants.register,
+      params: data,
+    );
+    final json = jsonDecode(result);
+    if (json['data'] != null) {
+      return login(data['email'], data['password']);
+    } else {
+      throw ApiException(code: ErrorConstants.alreadyInUse);
+    }
   }
 
   @override
