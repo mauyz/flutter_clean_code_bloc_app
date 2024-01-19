@@ -1,27 +1,24 @@
 import 'package:cross_platform_app/core/constants/key_constants.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @lazySingleton
 class LocaleUserSource {
-  final FlutterSecureStorage secureStorage;
+  final SharedPreferences preferences;
 
   LocaleUserSource({
-    required this.secureStorage,
+    required this.preferences,
   });
 
   Future saveLoggedUserId(int id) {
-    return secureStorage.write(
-      key: KeyConstants.loggedUserId,
-      value: id.toString(),
-    );
+    return preferences.setInt(KeyConstants.loggedUserId, id);
   }
 
   Future logOut() {
-    return secureStorage.delete(key: KeyConstants.loggedUserId);
+    return preferences.remove(KeyConstants.loggedUserId);
   }
 
   Future<int?> getLoggedUserId() async {
-    return (await secureStorage.read(key: KeyConstants.loggedUserId)) as int?;
+    return preferences.getInt(KeyConstants.loggedUserId);
   }
 }
