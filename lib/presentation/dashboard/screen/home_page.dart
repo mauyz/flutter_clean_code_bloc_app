@@ -6,7 +6,7 @@ import 'package:cross_platform_app/domain/usecases/user/log_out_usecase.dart';
 import 'package:cross_platform_app/domain/usecases/user/login_usecase.dart';
 import 'package:cross_platform_app/presentation/dashboard/bloc/get_user_bloc.dart';
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart';
-import 'package:cross_platform_app/services/dependecy_injection.dart';
+import 'package:cross_platform_app/services/dependency_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

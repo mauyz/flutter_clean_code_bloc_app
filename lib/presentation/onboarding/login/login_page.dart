@@ -7,7 +7,7 @@ import 'package:cross_platform_app/presentation/widgets/button/submit_button.dar
 import 'package:cross_platform_app/presentation/widgets/input/email_input.dart';
 import 'package:cross_platform_app/presentation/widgets/input/password_input.dart';
 import 'package:cross_platform_app/presentation/widgets/popup/display_snackbar.dart';
-import 'package:cross_platform_app/services/dependecy_injection.dart';
+import 'package:cross_platform_app/services/dependency_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reactive_forms/reactive_forms.dart';
