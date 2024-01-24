@@ -33,10 +33,6 @@ class ApiClient {
         },
         onError: (exception, handler) async {
           debugPrintStack(label: exception.toString());
-          if (exception.response?.statusCode == 401) {
-            // todo refresh token
-            return handler.resolve(await dio.fetch(exception.requestOptions));
-          }
           return handler.next(exception);
         },
       ),
@@ -62,6 +58,11 @@ class ApiClient {
             code: ErrorConstants.dataIncorrect,
           );
         }
+      }
+      if (result.statusCode == 401) {
+        throw ApiException(
+          code: ErrorConstants.tokenInvalid,
+        );
       }
     } on DioException catch (e) {
       throw ApiException(
@@ -90,6 +91,11 @@ class ApiClient {
             code: ErrorConstants.dataIncorrect,
           );
         }
+      }
+      if (result.statusCode == 401) {
+        throw ApiException(
+          code: ErrorConstants.tokenInvalid,
+        );
       }
     } on DioException catch (e) {
       throw ApiException(
