@@ -63,8 +63,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   ResultFuture<User> getUserById(int id) async {
     try {
-      final user = await remoteUserSource.getUserById(id);
-      return Right(user);
+      return Right(await remoteUserSource.getUserById(id));
     } on ApiException catch (e) {
       return Left(
         Failure(code: e.code),
@@ -81,5 +80,16 @@ class UserRepositoryImpl implements UserRepository {
       );
     }
     return const Right(null);
+  }
+
+  @override
+  ResultFuture<List<User>> getUserList(int page) async {
+    try {
+      return Right(await remoteUserSource.getUserList(page));
+    } on ApiException catch (e) {
+      return Left(
+        Failure(code: e.code),
+      );
+    }
   }
 }
