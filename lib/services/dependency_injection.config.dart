@@ -13,9 +13,9 @@ import 'package:cross_platform_app/data/repositories/user_repository_impl.dart'
 import 'package:cross_platform_app/data/sources/local/local_user_source.dart'
     as _i8;
 import 'package:cross_platform_app/data/sources/local/preference_storage.dart'
-    as _i23;
+    as _i24;
 import 'package:cross_platform_app/data/sources/local/secure_storage.dart'
-    as _i22;
+    as _i23;
 import 'package:cross_platform_app/data/sources/local/token_manager.dart'
     as _i6;
 import 'package:cross_platform_app/data/sources/remote/api/api_client.dart'
@@ -40,10 +40,12 @@ import 'package:cross_platform_app/presentation/dashboard/home/bloc/navigation_h
     as _i4;
 import 'package:cross_platform_app/presentation/dashboard/profile/bloc/get_user_bloc.dart'
     as _i20;
+import 'package:cross_platform_app/presentation/dashboard/users/bloc/get_user_list_bloc.dart'
+    as _i21;
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart'
     as _i19;
 import 'package:cross_platform_app/presentation/onboarding/register/bloc/register_bloc.dart'
-    as _i21;
+    as _i22;
 import 'package:cross_platform_app/presentation/onboarding/splash/bloc/splash_bloc.dart'
     as _i18;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i3;
@@ -102,12 +104,14 @@ extension GetItInjectableX on _i1.GetIt {
         ));
     gh.factory<_i20.GetUserBloc>(
         () => _i20.GetUserBloc(gettUserById: gh<_i14.GettUserById>()));
-    gh.factory<_i21.RegisterBloc>(
-        () => _i21.RegisterBloc(registerUseCase: gh<_i17.RegisterUseCase>()));
+    gh.factory<_i21.GetUserListBloc>(() => _i21.GetUserListBloc(
+        getUserListUseCase: gh<_i13.GetUserListUseCase>()));
+    gh.factory<_i22.RegisterBloc>(
+        () => _i22.RegisterBloc(registerUseCase: gh<_i17.RegisterUseCase>()));
     return this;
   }
 }
 
-class _$SecureStorage extends _i22.SecureStorage {}
+class _$SecureStorage extends _i23.SecureStorage {}
 
-class _$PreferenceStorage extends _i23.PreferenceStorage {}
+class _$PreferenceStorage extends _i24.PreferenceStorage {}
