@@ -4,4 +4,5 @@ class ApiConstants {
   static const login = "/authaccount/login";
   static const register = "/authaccount/registration";
   static const getUserById = "/users/";
+  static const getUserList = "/users?page=";
 }
