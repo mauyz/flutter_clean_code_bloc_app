@@ -1,4 +1,3 @@
-import 'package:cross_platform_app/core/constants/error_constants.dart';
 import 'package:cross_platform_app/core/error/exceptions.dart';
 import 'package:cross_platform_app/core/error/failure.dart';
 import 'package:cross_platform_app/core/typedef.dart';
@@ -45,12 +44,6 @@ class UserRepositoryImpl implements UserRepository {
       return Left(
         Failure(code: e.code),
       );
-    } on UnknownException {
-      return const Left(
-        Failure(
-          code: ErrorConstants.unknownError,
-        ),
-      );
     }
   }
 
@@ -64,12 +57,6 @@ class UserRepositoryImpl implements UserRepository {
       return Left(
         Failure(code: e.code),
       );
-    } on UnknownException {
-      return const Left(
-        Failure(
-          code: ErrorConstants.unknownError,
-        ),
-      );
     }
   }
 
@@ -81,12 +68,6 @@ class UserRepositoryImpl implements UserRepository {
     } on ApiException catch (e) {
       return Left(
         Failure(code: e.code),
-      );
-    } on UnknownException {
-      return const Left(
-        Failure(
-          code: ErrorConstants.unknownError,
-        ),
       );
     }
   }

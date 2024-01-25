@@ -65,11 +65,13 @@ class ApiClient {
         );
       }
     } on DioException catch (e) {
-      throw ApiException(
-        code: e.response?.statusCode ?? ErrorConstants.unknownError,
-      );
+      if (e.response?.statusCode != null) {
+        throw ApiException(
+          code: e.response!.statusCode!,
+        );
+      }
     }
-    throw UnknownException();
+    throw UnknownException;
   }
 
   Future<String> getData({
@@ -98,11 +100,13 @@ class ApiClient {
         );
       }
     } on DioException catch (e) {
-      throw ApiException(
-        code: e.response?.statusCode ?? ErrorConstants.unknownError,
-      );
+      if (e.response?.statusCode != null) {
+        throw ApiException(
+          code: e.response!.statusCode!,
+        );
+      }
     }
-    throw UnknownException();
+    throw UnknownException;
   }
 
   Future saveToken(String token) async {

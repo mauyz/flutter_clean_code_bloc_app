@@ -1,8 +1,6 @@
 class ErrorConstants {
   const ErrorConstants._();
 
-  static const unknownError = -1;
-
   static const tokenInvalid = 401;
   static const dataIncorrect = 402;
   static const requestInvalid = 403;
@@ -13,7 +11,7 @@ class ErrorConstants {
   static const inputIncorrect = 409;
 
   static const errorsMessageMap = {
-    unknownError: "Unknown error",
+    -1: "Unknown error",
     tokenInvalid: "Session expired",
     inputIncorrect: "Invalid username or password",
     dataIncorrect: "Invalid response",
