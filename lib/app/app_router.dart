@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cross_platform_app/domain/entities/user.dart';
-import 'package:cross_platform_app/presentation/dashboard/screen/home_page.dart';
-import 'package:cross_platform_app/presentation/dashboard/screen/profile_page.dart';
-import 'package:cross_platform_app/presentation/dashboard/screen/users_list_page.dart';
+import 'package:cross_platform_app/presentation/dashboard/home/home_page.dart';
+import 'package:cross_platform_app/presentation/dashboard/profile/profile_page.dart';
+import 'package:cross_platform_app/presentation/dashboard/users/users_list_page.dart';
 import 'package:cross_platform_app/presentation/onboarding/login/login_page.dart';
 import 'package:cross_platform_app/presentation/onboarding/register/register_page.dart';
 import 'package:cross_platform_app/presentation/onboarding/splash/splash_page.dart';

@@ -36,10 +36,10 @@ import 'package:cross_platform_app/domain/usecases/user/login_usecase.dart'
     as _i16;
 import 'package:cross_platform_app/domain/usecases/user/register_usecase.dart'
     as _i17;
-import 'package:cross_platform_app/presentation/dashboard/bloc/get_user_bloc.dart'
-    as _i20;
-import 'package:cross_platform_app/presentation/dashboard/bloc/navigation_home_cubit.dart'
+import 'package:cross_platform_app/presentation/dashboard/home/bloc/navigation_home_cubit.dart'
     as _i4;
+import 'package:cross_platform_app/presentation/dashboard/profile/bloc/get_user_bloc.dart'
+    as _i20;
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart'
     as _i19;
 import 'package:cross_platform_app/presentation/onboarding/register/bloc/register_bloc.dart'

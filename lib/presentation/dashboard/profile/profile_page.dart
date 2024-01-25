@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cross_platform_app/domain/entities/user.dart';
-import 'package:cross_platform_app/presentation/dashboard/bloc/get_user_bloc.dart';
+import 'package:cross_platform_app/presentation/dashboard/profile/bloc/get_user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

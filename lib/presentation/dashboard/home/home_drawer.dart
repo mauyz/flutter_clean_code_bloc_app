@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cross_platform_app/app/app_router.dart';
 import 'package:cross_platform_app/domain/entities/user.dart';
-import 'package:cross_platform_app/presentation/dashboard/bloc/navigation_home_cubit.dart';
+import 'package:cross_platform_app/presentation/dashboard/home/bloc/navigation_home_cubit.dart';
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

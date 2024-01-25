@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cross_platform_app/app/app_router.dart';
 import 'package:cross_platform_app/domain/entities/user.dart';
-import 'package:cross_platform_app/presentation/dashboard/bloc/get_user_bloc.dart';
-import 'package:cross_platform_app/presentation/dashboard/bloc/navigation_home_cubit.dart';
-import 'package:cross_platform_app/presentation/dashboard/screen/home_drawer.dart';
+import 'package:cross_platform_app/presentation/dashboard/home/bloc/navigation_home_cubit.dart';
+import 'package:cross_platform_app/presentation/dashboard/profile/bloc/get_user_bloc.dart';
+import 'package:cross_platform_app/presentation/dashboard/home/home_drawer.dart';
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart';
 import 'package:cross_platform_app/presentation/responsive_widget.dart';
 import 'package:cross_platform_app/presentation/widgets/popup/display_progress_dialog.dart';
