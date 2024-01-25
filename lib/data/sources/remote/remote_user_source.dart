@@ -84,8 +84,8 @@ class RemoteUserSourceImpl implements RemoteUserSource {
 
   @override
   Future<List<UserModel>> getUserList(int page) async {
-    final result = await apiClient.postData(
-      endPoint: '${ApiConstants.register}$page',
+    final result = await apiClient.getData(
+      endPoint: '${ApiConstants.getUserList}$page',
     );
     final json = jsonDecode(result);
     if (json['data'] != null) {
