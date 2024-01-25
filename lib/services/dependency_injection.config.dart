@@ -13,9 +13,9 @@ import 'package:cross_platform_app/data/repositories/user_repository_impl.dart'
 import 'package:cross_platform_app/data/sources/local/local_user_source.dart'
     as _i8;
 import 'package:cross_platform_app/data/sources/local/preference_storage.dart'
-    as _i22;
+    as _i23;
 import 'package:cross_platform_app/data/sources/local/secure_storage.dart'
-    as _i21;
+    as _i22;
 import 'package:cross_platform_app/data/sources/local/token_manager.dart'
     as _i6;
 import 'package:cross_platform_app/data/sources/remote/api/api_client.dart'
@@ -27,23 +27,25 @@ import 'package:cross_platform_app/domain/repositories/user_repository.dart'
 import 'package:cross_platform_app/domain/usecases/user/get_logged_user.dart'
     as _i12;
 import 'package:cross_platform_app/domain/usecases/user/get_user_by_id.dart'
+    as _i14;
+import 'package:cross_platform_app/domain/usecases/user/get_user_list_usecase.dart'
     as _i13;
 import 'package:cross_platform_app/domain/usecases/user/log_out_usecase.dart'
-    as _i14;
-import 'package:cross_platform_app/domain/usecases/user/login_usecase.dart'
     as _i15;
-import 'package:cross_platform_app/domain/usecases/user/register_usecase.dart'
+import 'package:cross_platform_app/domain/usecases/user/login_usecase.dart'
     as _i16;
+import 'package:cross_platform_app/domain/usecases/user/register_usecase.dart'
+    as _i17;
 import 'package:cross_platform_app/presentation/dashboard/bloc/get_user_bloc.dart'
-    as _i19;
+    as _i20;
 import 'package:cross_platform_app/presentation/dashboard/bloc/navigation_home_cubit.dart'
     as _i4;
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart'
-    as _i18;
+    as _i19;
 import 'package:cross_platform_app/presentation/onboarding/register/bloc/register_bloc.dart'
-    as _i20;
+    as _i21;
 import 'package:cross_platform_app/presentation/onboarding/splash/bloc/splash_bloc.dart'
-    as _i17;
+    as _i18;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i3;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
@@ -82,28 +84,30 @@ extension GetItInjectableX on _i1.GetIt {
         ));
     gh.lazySingleton<_i12.GetLoggedUser>(
         () => _i12.GetLoggedUser(userRepository: gh<_i10.UserRepository>()));
-    gh.lazySingleton<_i13.GettUserById>(
-        () => _i13.GettUserById(userRepository: gh<_i10.UserRepository>()));
-    gh.lazySingleton<_i14.LogOutUseCase>(
-        () => _i14.LogOutUseCase(userRepository: gh<_i10.UserRepository>()));
-    gh.lazySingleton<_i15.LoginUseCase>(
-        () => _i15.LoginUseCase(userRepository: gh<_i10.UserRepository>()));
-    gh.lazySingleton<_i16.RegisterUseCase>(
-        () => _i16.RegisterUseCase(userRepository: gh<_i10.UserRepository>()));
-    gh.factory<_i17.SplashBloc>(
-        () => _i17.SplashBloc(getLoggedUser: gh<_i12.GetLoggedUser>()));
-    gh.factory<_i18.AuthBloc>(() => _i18.AuthBloc(
-          loginUseCase: gh<_i15.LoginUseCase>(),
-          logOutUseCase: gh<_i14.LogOutUseCase>(),
+    gh.factory<_i13.GetUserListUseCase>(() =>
+        _i13.GetUserListUseCase(userRepository: gh<_i10.UserRepository>()));
+    gh.lazySingleton<_i14.GettUserById>(
+        () => _i14.GettUserById(userRepository: gh<_i10.UserRepository>()));
+    gh.lazySingleton<_i15.LogOutUseCase>(
+        () => _i15.LogOutUseCase(userRepository: gh<_i10.UserRepository>()));
+    gh.lazySingleton<_i16.LoginUseCase>(
+        () => _i16.LoginUseCase(userRepository: gh<_i10.UserRepository>()));
+    gh.lazySingleton<_i17.RegisterUseCase>(
+        () => _i17.RegisterUseCase(userRepository: gh<_i10.UserRepository>()));
+    gh.factory<_i18.SplashBloc>(
+        () => _i18.SplashBloc(getLoggedUser: gh<_i12.GetLoggedUser>()));
+    gh.factory<_i19.AuthBloc>(() => _i19.AuthBloc(
+          loginUseCase: gh<_i16.LoginUseCase>(),
+          logOutUseCase: gh<_i15.LogOutUseCase>(),
         ));
-    gh.factory<_i19.GetUserBloc>(
-        () => _i19.GetUserBloc(gettUserById: gh<_i13.GettUserById>()));
-    gh.factory<_i20.RegisterBloc>(
-        () => _i20.RegisterBloc(registerUseCase: gh<_i16.RegisterUseCase>()));
+    gh.factory<_i20.GetUserBloc>(
+        () => _i20.GetUserBloc(gettUserById: gh<_i14.GettUserById>()));
+    gh.factory<_i21.RegisterBloc>(
+        () => _i21.RegisterBloc(registerUseCase: gh<_i17.RegisterUseCase>()));
     return this;
   }
 }
 
-class _$SecureStorage extends _i21.SecureStorage {}
+class _$SecureStorage extends _i22.SecureStorage {}
 
-class _$PreferenceStorage extends _i22.PreferenceStorage {}
+class _$PreferenceStorage extends _i23.PreferenceStorage {}
