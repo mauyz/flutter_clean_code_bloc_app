@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
-class DrawerItem extends StatelessWidget {
+class DrawerItemWidget extends StatelessWidget {
   final String title;
+  final bool selected;
   final IconData? leadingIcon;
   final Function()? onTap;
   final bool? closeDrawerOnTap;
 
-  const DrawerItem({
+  const DrawerItemWidget({
     super.key,
     required this.title,
+    required this.selected,
     this.leadingIcon,
     this.onTap,
     this.closeDrawerOnTap = true,
@@ -25,9 +27,10 @@ class DrawerItem extends StatelessWidget {
       title: Text(
         title,
       ),
+      selected: selected,
       onTap: () {
         if (closeDrawerOnTap == true) {
-          Scaffold.of(context).closeDrawer();
+          Scaffold.maybeOf(context)?.closeDrawer();
         }
         onTap?.call();
       },
