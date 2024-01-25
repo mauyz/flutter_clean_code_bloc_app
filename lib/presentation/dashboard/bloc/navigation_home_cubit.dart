@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class NavigationCubit extends Cubit<int> {
-  NavigationCubit() : super(0);
+class NavigationHomeCubit extends Cubit<int> {
+  NavigationHomeCubit() : super(0);
 
   void navigateTo(int index) {
     emit(index);

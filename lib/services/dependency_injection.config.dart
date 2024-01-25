@@ -36,7 +36,7 @@ import 'package:cross_platform_app/domain/usecases/user/register_usecase.dart'
     as _i16;
 import 'package:cross_platform_app/presentation/dashboard/bloc/get_user_bloc.dart'
     as _i19;
-import 'package:cross_platform_app/presentation/dashboard/bloc/navigation_cubit.dart'
+import 'package:cross_platform_app/presentation/dashboard/bloc/navigation_home_cubit.dart'
     as _i4;
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart'
     as _i18;
@@ -63,7 +63,7 @@ extension GetItInjectableX on _i1.GetIt {
     final secureStorage = _$SecureStorage();
     final preferenceStorage = _$PreferenceStorage();
     gh.factory<_i3.FlutterSecureStorage>(() => secureStorage.storage);
-    gh.factory<_i4.NavigationCubit>(() => _i4.NavigationCubit());
+    gh.factory<_i4.NavigationHomeCubit>(() => _i4.NavigationHomeCubit());
     await gh.factoryAsync<_i5.SharedPreferences>(
       () => preferenceStorage.preferences,
       preResolve: true,

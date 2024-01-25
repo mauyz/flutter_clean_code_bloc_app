@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cross_platform_app/app/app_router.dart';
 import 'package:cross_platform_app/domain/entities/user.dart';
 import 'package:cross_platform_app/presentation/dashboard/bloc/get_user_bloc.dart';
-import 'package:cross_platform_app/presentation/dashboard/bloc/navigation_cubit.dart';
+import 'package:cross_platform_app/presentation/dashboard/bloc/navigation_home_cubit.dart';
 import 'package:cross_platform_app/presentation/dashboard/screen/home_drawer.dart';
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart';
 import 'package:cross_platform_app/presentation/responsive_widget.dart';
@@ -30,8 +30,8 @@ class HomePage extends StatelessWidget {
         BlocProvider<AuthBloc>(
           create: (_) => getIt.get<AuthBloc>(),
         ),
-        BlocProvider<NavigationCubit>(
-          create: (_) => getIt.get<NavigationCubit>(),
+        BlocProvider<NavigationHomeCubit>(
+          create: (_) => getIt.get<NavigationHomeCubit>(),
         ),
       ],
       child: BlocListener<AuthBloc, AuthState>(
@@ -45,46 +45,44 @@ class HomePage extends StatelessWidget {
         },
         child: Builder(
           builder: (buildContext) {
-            return Scaffold(
-              appBar: ResponsiveWidget.isMobile(buildContext)
-                  ? AppBar(
-                      leading: Builder(
-                        builder: (context) {
-                          return InkWell(
-                            child: const Icon(
-                              Icons.menu,
-                            ),
-                            onTap: () {
-                              Scaffold.of(context).openDrawer();
-                            },
-                          );
+            if (ResponsiveWidget.isMobile(buildContext)) {
+              final scaffoldKey = GlobalKey<ScaffoldState>();
+              return Scaffold(
+                key: scaffoldKey,
+                appBar: AppBar(
+                  leading: Builder(
+                    builder: (context) {
+                      return InkWell(
+                        child: const Icon(
+                          Icons.menu,
+                        ),
+                        onTap: () {
+                          scaffoldKey.currentState!.openDrawer();
                         },
-                      ),
-                    )
-                  : null,
-              drawer: HomeDrawer(
-                user: user,
-              ),
-              body: ResponsiveWidget.isMobile(buildContext)
-                  ? const SafeArea(
-                      child: AutoRouter(
-                        key: routerKey,
-                      ),
-                    )
-                  : Row(
-                      children: [
-                        Expanded(
-                          child: HomeDrawer(user: user),
-                        ),
-                        const VerticalDivider(),
-                        const Expanded(
-                          flex: 5,
-                          child: AutoRouter(
-                            key: routerKey,
-                          ),
-                        ),
-                      ],
+                      );
+                    },
+                  ),
+                ),
+                drawer: HomeDrawer(user: user),
+                body: const AutoRouter(
+                  key: routerKey,
+                ),
+              );
+            }
+            return Scaffold(
+              body: Row(
+                children: [
+                  Expanded(
+                    child: HomeDrawer(user: user),
+                  ),
+                  const Expanded(
+                    flex: 5,
+                    child: AutoRouter(
+                      key: routerKey,
                     ),
+                  ),
+                ],
+              ),
             );
           },
         ),
