@@ -76,6 +76,7 @@ class HomePage extends StatelessWidget {
                         Expanded(
                           child: HomeDrawer(user: user),
                         ),
+                        const VerticalDivider(),
                         const Expanded(
                           flex: 5,
                           child: AutoRouter(
