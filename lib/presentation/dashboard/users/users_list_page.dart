@@ -11,7 +11,12 @@ class UsersListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<GetUserListBloc>().add(const GetUserListByPageEvent(page: 1));
+    final getUserListBloc = context.read<GetUserListBloc>();
+    if (getUserListBloc.state is GetUserListInitial) {
+      getUserListBloc.add(
+        const GetUserListByPageEvent(page: 1),
+      );
+    }
     return BlocBuilder<GetUserListBloc, GetUserListState>(
       builder: (_, state) {
         if (state is GetUserListFailed) {
@@ -26,19 +31,22 @@ class UsersListPage extends StatelessWidget {
           );
         }
         if (state is GetUserListSuccess) {
-          final Size size = MediaQuery.of(context).size;
-          return ResponsiveWidget(
-            mobile: UserListGridView(
-              users: state.users,
-              crossAxisCount: size.width < 650 ? 2 : 4,
-              childAspectRatio: size.width < 650 && size.width > 350 ? 1.3 : 1,
-            ),
-            desktop: UserListGridView(
-              users: state.users,
-              childAspectRatio: size.width < 1400 ? 1.1 : 1.4,
-            ),
-            tablet: UserListGridView(users: state.users),
-          );
+          return Builder(builder: (context) {
+            final Size size = MediaQuery.of(context).size;
+            return ResponsiveWidget(
+              mobile: UserListGridView(
+                users: state.users,
+                crossAxisCount: size.width < 650 ? 2 : 4,
+                childAspectRatio:
+                    size.width < 650 && size.width > 350 ? 1.3 : 1,
+              ),
+              desktop: UserListGridView(
+                users: state.users,
+                childAspectRatio: size.width < 1400 ? 1.1 : 1.4,
+              ),
+              tablet: UserListGridView(users: state.users),
+            );
+          });
         }
         return const Center(
           child: CircularProgressIndicator(),

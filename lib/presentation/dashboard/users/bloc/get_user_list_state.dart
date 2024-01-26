@@ -7,6 +7,10 @@ abstract class GetUserListState extends Equatable {
   List<Object?> get props => [];
 }
 
+class GetUserListInitial extends GetUserListState {
+  const GetUserListInitial();
+}
+
 class GetUserListLoading extends GetUserListState {
   const GetUserListLoading();
 }

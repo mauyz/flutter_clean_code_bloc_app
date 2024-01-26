@@ -13,7 +13,7 @@ class GetUserListBloc extends Bloc<GetUserListEvent, GetUserListState> {
   final GetUserListUseCase getUserListUseCase;
 
   GetUserListBloc({required this.getUserListUseCase})
-      : super(const GetUserListLoading()) {
+      : super(const GetUserListInitial()) {
     on<GetUserListByPageEvent>(_getUserListByPageHandler);
   }
   _getUserListByPageHandler(GetUserListByPageEvent event, Emitter emit) async {
