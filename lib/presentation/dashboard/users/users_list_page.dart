@@ -31,22 +31,27 @@ class UsersListPage extends StatelessWidget {
           );
         }
         if (state is GetUserListSuccess) {
-          return Builder(builder: (context) {
-            final Size size = MediaQuery.of(context).size;
-            return ResponsiveWidget(
-              mobile: UserListGridView(
-                users: state.users,
-                crossAxisCount: size.width < 650 ? 2 : 4,
-                childAspectRatio:
-                    size.width < 650 && size.width > 350 ? 1.3 : 1,
-              ),
-              desktop: UserListGridView(
-                users: state.users,
-                childAspectRatio: size.width < 1400 ? 1.1 : 1.4,
-              ),
-              tablet: UserListGridView(users: state.users),
-            );
-          });
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Builder(
+              builder: (context) {
+                final Size size = MediaQuery.of(context).size;
+                return ResponsiveWidget(
+                  mobile: UserListGridView(
+                    users: state.users,
+                    crossAxisCount: size.width < 650 ? 2 : 4,
+                    childAspectRatio:
+                        size.width < 650 && size.width > 350 ? 1.3 : 1,
+                  ),
+                  desktop: UserListGridView(
+                    users: state.users,
+                    childAspectRatio: size.width < 1400 ? 1.1 : 1.4,
+                  ),
+                  tablet: UserListGridView(users: state.users),
+                );
+              },
+            ),
+          );
         }
         return const Center(
           child: CircularProgressIndicator(),
