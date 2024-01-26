@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cross_platform_app/domain/entities/user.dart';
 import 'package:cross_platform_app/presentation/dashboard/profile/bloc/get_user_bloc.dart';
+import 'package:cross_platform_app/presentation/responsive_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,53 +34,59 @@ class ProfilePage extends StatelessWidget {
         }
         if (state is GetUserLoaded) {
           final profile = state.user;
-          return Container(
-            alignment: Alignment.topCenter,
-            padding: const EdgeInsets.only(top: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(140),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 10,
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: ResponsiveWidget.isMobile(context)
+                    ? const EdgeInsets.all(10.0)
+                    : const EdgeInsets.symmetric(
+                        horizontal: 50,
+                        vertical: 20.0,
                       ),
-                    ],
-                  ),
-                  child: CircleAvatar(
-                    radius: 120,
-                    backgroundImage: NetworkImage(
-                      profile.profilepicture!,
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Center(
+                          child: CircleAvatar(
+                            radius: 120,
+                            backgroundImage: NetworkImage(
+                              profile.profilepicture!,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          profile.name,
+                          style: const TextStyle(
+                            fontSize: 20.0,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          profile.email,
+                          style: const TextStyle(
+                            fontSize: 15.0,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  profile.name,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  profile.email,
-                  style: const TextStyle(
-                    fontSize: 15.0,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           );
         }
         return const Center(child: CircularProgressIndicator());
