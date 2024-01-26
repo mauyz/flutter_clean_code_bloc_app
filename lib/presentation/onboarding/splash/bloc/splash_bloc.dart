@@ -18,6 +18,9 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   _getLoggedUserHandler(SplashEvent event, Emitter<SplashState> emit) async {
     final result = await getLoggedUser();
+    await Future.delayed(
+      const Duration(seconds: 2),
+    );
     result.fold(
       (l) => null,
       (r) => emit(SplashLoaded(r)),

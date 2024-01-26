@@ -1,4 +1,3 @@
-import 'package:cross_platform_app/core/constants/error_constants.dart';
 import 'package:cross_platform_app/core/error/exceptions.dart';
 import 'package:cross_platform_app/core/error/failure.dart';
 import 'package:cross_platform_app/core/typedef.dart';
@@ -45,12 +44,6 @@ class UserRepositoryImpl implements UserRepository {
       return Left(
         Failure(code: e.code),
       );
-    } on UnknownException {
-      return const Left(
-        Failure(
-          code: ErrorConstants.unknownError,
-        ),
-      );
     }
   }
 
@@ -64,29 +57,16 @@ class UserRepositoryImpl implements UserRepository {
       return Left(
         Failure(code: e.code),
       );
-    } on UnknownException {
-      return const Left(
-        Failure(
-          code: ErrorConstants.unknownError,
-        ),
-      );
     }
   }
 
   @override
   ResultFuture<User> getUserById(int id) async {
     try {
-      final user = await remoteUserSource.getUserById(id);
-      return Right(user);
+      return Right(await remoteUserSource.getUserById(id));
     } on ApiException catch (e) {
       return Left(
         Failure(code: e.code),
-      );
-    } on UnknownException {
-      return const Left(
-        Failure(
-          code: ErrorConstants.unknownError,
-        ),
       );
     }
   }
@@ -100,5 +80,16 @@ class UserRepositoryImpl implements UserRepository {
       );
     }
     return const Right(null);
+  }
+
+  @override
+  ResultFuture<List<User>> getUserList(int page) async {
+    try {
+      return Right(await remoteUserSource.getUserList(page));
+    } on ApiException catch (e) {
+      return Left(
+        Failure(code: e.code),
+      );
+    }
   }
 }

@@ -10,6 +10,7 @@ abstract class RemoteUserSource {
   Future<UserModel> login(String email, String password);
   Future<UserModel> register(Map<String, dynamic> data);
   Future<UserModel> getUserById(int id);
+  Future<List<UserModel>> getUserList(int page);
   Future logOut();
 }
 
@@ -78,6 +79,25 @@ class RemoteUserSourceImpl implements RemoteUserSource {
       } else {
         throw ApiException(code: ErrorConstants.requestInvalid);
       }
+    }
+  }
+
+  @override
+  Future<List<UserModel>> getUserList(int page) async {
+    final result = await apiClient.getData(
+      endPoint: '${ApiConstants.getUserList}$page',
+    );
+    final json = jsonDecode(result);
+    if (json['data'] != null) {
+      return (json['data'] as List<dynamic>)
+          .map(
+            (e) => UserModel.fromJson(
+              Map<String, dynamic>.from(e),
+            ),
+          )
+          .toList();
+    } else {
+      throw ApiException(code: ErrorConstants.inputIncorrect);
     }
   }
 }

@@ -7,5 +7,6 @@ abstract class UserRepository {
   ResultFuture<User> login(String email, String password);
   ResultFuture<User> register(Map<String, dynamic> data);
   ResultFuture<User> getUserById(int id);
+  ResultFuture<List<User>> getUserList(int page);
   ResultFuture logOut();
 }

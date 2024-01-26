@@ -33,10 +33,6 @@ class ApiClient {
         },
         onError: (exception, handler) async {
           debugPrintStack(label: exception.toString());
-          if (exception.response?.statusCode == 401) {
-            // todo refresh token
-            return handler.resolve(await dio.fetch(exception.requestOptions));
-          }
           return handler.next(exception);
         },
       ),
@@ -63,12 +59,19 @@ class ApiClient {
           );
         }
       }
+      if (result.statusCode == 401) {
+        throw ApiException(
+          code: ErrorConstants.tokenInvalid,
+        );
+      }
     } on DioException catch (e) {
-      throw ApiException(
-        code: e.response?.statusCode ?? ErrorConstants.unknownError,
-      );
+      if (e.response?.statusCode != null) {
+        throw ApiException(
+          code: e.response!.statusCode!,
+        );
+      }
     }
-    throw UnknownException();
+    throw UnknownException;
   }
 
   Future<String> getData({
@@ -91,12 +94,19 @@ class ApiClient {
           );
         }
       }
+      if (result.statusCode == 401) {
+        throw ApiException(
+          code: ErrorConstants.tokenInvalid,
+        );
+      }
     } on DioException catch (e) {
-      throw ApiException(
-        code: e.response?.statusCode ?? ErrorConstants.unknownError,
-      );
+      if (e.response?.statusCode != null) {
+        throw ApiException(
+          code: e.response!.statusCode!,
+        );
+      }
     }
-    throw UnknownException();
+    throw UnknownException;
   }
 
   Future saveToken(String token) async {
