@@ -15,8 +15,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final getUserBloc = context.read<GetUserBloc>();
-    final state = getUserBloc.state;
-    if (state is GetUserInitial) {
+    if (getUserBloc.state is GetUserInitial) {
       getUserBloc.add(GetUserEvent(id: user.id));
     }
     return BlocBuilder<GetUserBloc, GetUserState>(
