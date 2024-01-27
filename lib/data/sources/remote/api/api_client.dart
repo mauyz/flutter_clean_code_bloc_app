@@ -54,13 +54,13 @@ class ApiClient {
         if (data != null) {
           return data;
         } else {
-          throw ApiException(
+          throw const ApiException(
             code: ErrorConstants.dataIncorrect,
           );
         }
       }
       if (result.statusCode == 401) {
-        throw ApiException(
+        throw const ApiException(
           code: ErrorConstants.tokenInvalid,
         );
       }
@@ -70,8 +70,11 @@ class ApiClient {
           code: e.response!.statusCode!,
         );
       }
+      if (e.message?.contains("Failed host lookup") == true) {
+        throw const ApiException(code: ErrorConstants.connexionError);
+      }
     }
-    throw UnknownException;
+    throw const UnknownException();
   }
 
   Future<String> getData({
@@ -89,13 +92,13 @@ class ApiClient {
         if (data != null) {
           return data;
         } else {
-          throw ApiException(
+          throw const ApiException(
             code: ErrorConstants.dataIncorrect,
           );
         }
       }
       if (result.statusCode == 401) {
-        throw ApiException(
+        throw const ApiException(
           code: ErrorConstants.tokenInvalid,
         );
       }
@@ -105,8 +108,11 @@ class ApiClient {
           code: e.response!.statusCode!,
         );
       }
+      if (e.message?.contains("Failed host lookup") == true) {
+        throw const ApiException(code: ErrorConstants.connexionError);
+      }
     }
-    throw UnknownException;
+    throw const UnknownException();
   }
 
   Future saveToken(String token) async {

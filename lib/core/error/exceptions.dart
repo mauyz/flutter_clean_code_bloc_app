@@ -1,11 +1,11 @@
 class ApiException implements Exception {
   final int code;
 
-  ApiException({
+  const ApiException({
     required this.code,
   });
 }
 
-sealed class UnknownException extends ApiException {
-  UnknownException() : super(code: -1);
+class UnknownException extends ApiException {
+  const UnknownException() : super(code: -1);
 }
