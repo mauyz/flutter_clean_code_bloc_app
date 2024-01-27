@@ -62,6 +62,7 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
     final isAuthenticated = await getIt.get<TokenManager>().hasToken();
     if (isAuthenticated ||
         resolver.route.name == LoginRoute.name ||
+        resolver.route.name == RegisterRoute.name ||
         resolver.route.name == SplashRoute.name) {
       resolver.next();
     } else {
