@@ -1,3 +1,4 @@
+import 'package:cross_platform_app/presentation/styles/decorations.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -19,16 +20,9 @@ class _PasswordInputState extends State<PasswordInput> {
         ValidationMessage.required: (_) => 'The password must not be empty',
       },
       textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(8),
-          ),
-        ),
-        labelText: "Password",
-        prefixIcon: const Icon(
-          Icons.lock,
-        ),
+      decoration: Decorations.roundedBorderInpuitDecoration(
+        "password",
+        prefixIcon: Icons.lock,
         suffixIcon: TextButton(
           onPressed: () {
             if (mounted) {
