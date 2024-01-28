@@ -35,7 +35,7 @@ class UsersListPage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Builder(
               builder: (context) {
-                final Size size = MediaQuery.of(context).size;
+                final Size size = MediaQuery.sizeOf(context);
                 return ResponsiveWidget(
                   mobile: UserListGridView(
                     users: state.users,
