@@ -22,7 +22,7 @@ class _ConfirmPasswordInputState extends State<ConfirmPasswordInput> {
       },
       textInputAction: TextInputAction.done,
       decoration: Decorations.roundedBorderInpuitDecoration(
-        "ConfirmPasswprd",
+        "Confirm password",
         prefixIcon: Icons.lock,
         suffixIcon: TextButton(
           onPressed: () {

@@ -21,7 +21,7 @@ class _PasswordInputState extends State<PasswordInput> {
       },
       textInputAction: TextInputAction.done,
       decoration: Decorations.roundedBorderInpuitDecoration(
-        "password",
+        "Password",
         prefixIcon: Icons.lock,
         suffixIcon: TextButton(
           onPressed: () {
