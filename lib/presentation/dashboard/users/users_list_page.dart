@@ -31,6 +31,10 @@ class UsersListPage extends StatelessWidget {
           );
         }
         if (state is GetUserListSuccess) {
+          final users = state.users;
+          users.sort(
+            (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+          );
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Builder(
@@ -38,13 +42,13 @@ class UsersListPage extends StatelessWidget {
                 final Size size = MediaQuery.sizeOf(context);
                 return ResponsiveWidget(
                   mobile: UserListGridView(
-                    users: state.users,
+                    users: users,
                     crossAxisCount: size.width < 650 ? 2 : 4,
                     childAspectRatio:
                         size.width < 650 && size.width > 350 ? 1.3 : 1,
                   ),
                   desktop: UserListGridView(
-                    users: state.users,
+                    users: users,
                     childAspectRatio: size.width < 1400 ? 1.1 : 1.4,
                   ),
                   tablet: UserListGridView(users: state.users),
