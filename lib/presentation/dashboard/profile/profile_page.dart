@@ -81,6 +81,18 @@ class ProfilePage extends StatelessWidget {
                           ),
                           textAlign: TextAlign.center,
                         ),
+                        if (profile.location != null)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Text(
+                              profile.location!,
+                              style: const TextStyle(
+                                fontSize: 15.0,
+                                fontStyle: FontStyle.italic,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                       ],
                     ),
                   ),
