@@ -1,64 +1,51 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cross_platform_app/domain/entities/user.dart';
 import 'package:cross_platform_app/presentation/dashboard/users/bloc/get_user_list_bloc.dart';
-import 'package:cross_platform_app/presentation/dashboard/users/user_list_grid_view.dart';
-import 'package:cross_platform_app/presentation/responsive_widget.dart';
+import 'package:cross_platform_app/presentation/dashboard/users/bloc/pagination_cubit.dart';
+import 'package:cross_platform_app/presentation/dashboard/users/user_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class UsersListPage extends StatelessWidget {
-  const UsersListPage({super.key});
-
+  const UsersListPage({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
-    final getUserListBloc = context.read<GetUserListBloc>();
-    if (getUserListBloc.state is GetUserListInitial) {
-      getUserListBloc.add(
-        const GetUserListByPageEvent(page: 1),
-      );
-    }
-    return BlocBuilder<GetUserListBloc, GetUserListState>(
-      builder: (_, state) {
-        if (state is GetUserListFailed) {
-          return Center(
-            child: Text(
-              state.failure.message,
-              style: const TextStyle(
-                fontSize: 15.0,
-                color: Colors.red,
-              ),
-            ),
-          );
+    final Map<int, List<User>> usersByPage = <int, List<User>>{};
+
+    return BlocBuilder<PaginationCubit, int>(
+      builder: (_, page) {
+        if (usersByPage[page] != null) {
+          return UserListWidget(users: usersByPage[page]!);
         }
-        if (state is GetUserListSuccess) {
-          final users = state.users;
-          users.sort(
-            (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
-          );
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Builder(
-              builder: (context) {
-                final Size size = MediaQuery.sizeOf(context);
-                return ResponsiveWidget(
-                  mobile: UserListGridView(
-                    users: users,
-                    crossAxisCount: size.width < 650 ? 2 : 4,
-                    childAspectRatio:
-                        size.width < 650 && size.width > 350 ? 1.3 : 1,
+        context.read<GetUserListBloc>().add(GetUserListByPageEvent(page: page));
+        return BlocBuilder<GetUserListBloc, GetUserListState>(
+          builder: (_, state) {
+            if (state is GetUserListFailed) {
+              return Center(
+                child: Text(
+                  state.failure.message,
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.red,
                   ),
-                  desktop: UserListGridView(
-                    users: users,
-                    childAspectRatio: size.width < 1400 ? 1.1 : 1.4,
-                  ),
-                  tablet: UserListGridView(users: state.users),
-                );
-              },
-            ),
-          );
-        }
-        return const Center(
-          child: CircularProgressIndicator(),
+                ),
+              );
+            }
+            if (state is GetUserListSuccess) {
+              final users = state.users;
+              users.sort(
+                (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+              );
+              usersByPage[page] = users;
+              return UserListWidget(users: users);
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         );
       },
     );
