@@ -35,6 +35,7 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
       AutoRoute(
         page: HomeRoute.page,
         path: "/home",
+        maintainState: true,
         children: [
           RedirectRoute(
             path: "",
