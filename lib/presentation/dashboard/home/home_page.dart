@@ -5,6 +5,7 @@ import 'package:cross_platform_app/presentation/dashboard/home/bloc/navigation_h
 import 'package:cross_platform_app/presentation/dashboard/profile/bloc/get_user_bloc.dart';
 import 'package:cross_platform_app/presentation/dashboard/home/home_drawer.dart';
 import 'package:cross_platform_app/presentation/dashboard/users/bloc/get_user_list_bloc.dart';
+import 'package:cross_platform_app/presentation/dashboard/users/bloc/pagination_cubit.dart';
 import 'package:cross_platform_app/presentation/onboarding/login/bloc/auth_bloc.dart';
 import 'package:cross_platform_app/presentation/responsive_widget.dart';
 import 'package:cross_platform_app/presentation/widgets/popup/display_progress_dialog.dart';
@@ -36,6 +37,9 @@ class HomePage extends StatelessWidget {
         ),
         BlocProvider<NavigationHomeCubit>(
           create: (_) => getIt.get<NavigationHomeCubit>(),
+        ),
+        BlocProvider<PaginationCubit>(
+          create: (_) => getIt.get<PaginationCubit>(),
         ),
       ],
       child: BlocListener<AuthBloc, AuthState>(
