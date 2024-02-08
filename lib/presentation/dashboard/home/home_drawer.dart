@@ -41,7 +41,7 @@ class HomeDrawer extends StatelessWidget {
             ),
             NavigationDrawerDestination(
               icon: Icon(Icons.logout),
-              label: Text("LogOut"),
+              label: Text("Log out"),
             ),
           ],
         );
