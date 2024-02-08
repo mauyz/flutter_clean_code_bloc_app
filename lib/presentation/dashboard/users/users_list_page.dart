@@ -1,51 +1,77 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cross_platform_app/domain/entities/user.dart';
 import 'package:cross_platform_app/presentation/dashboard/users/bloc/get_user_list_bloc.dart';
-import 'package:cross_platform_app/presentation/dashboard/users/bloc/pagination_cubit.dart';
+import 'package:cross_platform_app/presentation/dashboard/users/refresh_user_list_widget.dart';
 import 'package:cross_platform_app/presentation/dashboard/users/user_list_widget.dart';
+import 'package:cross_platform_app/presentation/widgets/text/error_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class UsersListPage extends StatelessWidget {
+class UsersListPage extends StatefulWidget {
   const UsersListPage({
     super.key,
   });
+
+  @override
+  State<UsersListPage> createState() => _UsersListPageState();
+}
+
+class _UsersListPageState extends State<UsersListPage> {
+  @override
+  void initState() {
+    if (context.read<GetUserListBloc>().state is! GetUserListLoaded) {
+      context.read<GetUserListBloc>().add(GetUserListByPageEvent(
+            page: context.read<GetUserListBloc>().state.page,
+          ));
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final Map<int, List<User>> usersByPage = <int, List<User>>{};
-
-    return BlocBuilder<PaginationCubit, int>(
-      builder: (_, page) {
-        if (usersByPage[page] != null) {
-          return UserListWidget(users: usersByPage[page]!);
-        }
-        context.read<GetUserListBloc>().add(GetUserListByPageEvent(page: page));
-        return BlocBuilder<GetUserListBloc, GetUserListState>(
-          builder: (_, state) {
-            if (state is GetUserListFailed) {
-              return Center(
-                child: Text(
-                  state.failure.message,
-                  style: const TextStyle(
-                    fontSize: 15.0,
-                    color: Colors.red,
-                  ),
+    return BlocBuilder<GetUserListBloc, GetUserListState>(
+      builder: (_, state) {
+        if (state is GetUserListFailed) {
+          return RefreshUserListWidget(
+            page: state.page,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Container(
+                alignment: Alignment.center,
+                height: MediaQuery.sizeOf(context).height,
+                child: ErrorTextWidget(
+                  text: state.failure.message,
                 ),
-              );
-            }
-            if (state is GetUserListSuccess) {
-              final users = state.users;
-              users.sort(
-                (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
-              );
-              usersByPage[page] = users;
-              return UserListWidget(users: users);
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+              ),
+            ),
+          );
+        }
+        if (state is GetUserListLoaded) {
+          final users = state.usersMap[state.page]!;
+          users.sort(
+            (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+          );
+          return RefreshUserListWidget(
+            page: state.page,
+            child: users.isEmpty
+                ? SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: MediaQuery.sizeOf(context).height,
+                      child: const ErrorTextWidget(
+                        text: "No users found",
+                      ),
+                    ),
+                  )
+                : UserListWidget(
+                    users: users,
+                    page: state.page,
+                  ),
+          );
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
         );
       },
     );

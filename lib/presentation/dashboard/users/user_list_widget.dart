@@ -1,5 +1,5 @@
 import 'package:cross_platform_app/domain/entities/user.dart';
-import 'package:cross_platform_app/presentation/dashboard/users/bloc/pagination_cubit.dart';
+import 'package:cross_platform_app/presentation/dashboard/users/bloc/get_user_list_bloc.dart';
 import 'package:cross_platform_app/presentation/dashboard/users/user_list_grid_view.dart';
 import 'package:cross_platform_app/presentation/responsive_widget.dart';
 import 'package:cross_platform_app/presentation/widgets/button/submit_button.dart';
@@ -8,14 +8,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserListWidget extends StatelessWidget {
   final List<User> users;
+  final int page;
   const UserListWidget({
     super.key,
     required this.users,
+    required this.page,
   });
 
   @override
   Widget build(BuildContext context) {
-    final paginationCubit = context.read<PaginationCubit>();
+    final getUserListBloc = context.read<GetUserListBloc>();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -47,16 +49,26 @@ class UserListWidget extends StatelessWidget {
               children: [
                 SubmitButton(
                   text: "Previous",
-                  onPressed: paginationCubit.state == 1
+                  onPressed: page == 1
                       ? null
-                      : () => paginationCubit.decrement(),
+                      : () => getUserListBloc.add(
+                            GetUserListByPageEvent(page: page - 1),
+                          ),
                 ),
-                const SizedBox(
-                  width: 5,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Page $page',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 SubmitButton(
                   text: "Next",
-                  onPressed: () => paginationCubit.increment(),
+                  onPressed: () => getUserListBloc.add(
+                    GetUserListByPageEvent(page: page + 1),
+                  ),
                 ),
               ],
             ),
