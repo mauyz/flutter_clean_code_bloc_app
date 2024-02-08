@@ -18,15 +18,40 @@ class UserListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final getUserListBloc = context.read<GetUserListBloc>();
+    final paginationWidgets = [
+      SubmitButton(
+        text: "Previous",
+        onPressed: page == 1
+            ? null
+            : () => getUserListBloc.add(
+                  GetUserListByPageEvent(page: page - 1),
+                ),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          'Page $page',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      SubmitButton(
+        text: "Next",
+        onPressed: () => getUserListBloc.add(
+          GetUserListByPageEvent(page: page + 1),
+        ),
+      ),
+    ];
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Expanded(
-            child: Builder(
-              builder: (context) {
-                final Size size = MediaQuery.sizeOf(context);
-                return ResponsiveWidget(
+      child: Builder(
+        builder: (buidContext) {
+          final Size size = MediaQuery.sizeOf(buidContext);
+          return Column(
+            children: [
+              Expanded(
+                child: ResponsiveWidget(
                   mobile: UserListGridView(
                     users: users,
                     crossAxisCount: size.width < 650 ? 2 : 4,
@@ -38,42 +63,24 @@ class UserListWidget extends StatelessWidget {
                     childAspectRatio: size.width < 1400 ? 1.1 : 1.4,
                   ),
                   tablet: UserListGridView(users: users),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SubmitButton(
-                  text: "Previous",
-                  onPressed: page == 1
-                      ? null
-                      : () => getUserListBloc.add(
-                            GetUserListByPageEvent(page: page - 1),
-                          ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Page $page',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SubmitButton(
-                  text: "Next",
-                  onPressed: () => getUserListBloc.add(
-                    GetUserListByPageEvent(page: page + 1),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: size.width < 480
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: paginationWidgets,
+                      )
+                    : Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: paginationWidgets,
+                      ),
+              )
+            ],
+          );
+        },
       ),
     );
   }
