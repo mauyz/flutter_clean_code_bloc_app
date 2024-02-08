@@ -8,10 +8,10 @@ abstract class GetUserListEvent extends Equatable {
 
 class GetUserListByPageEvent extends GetUserListEvent {
   final int page;
+  final bool? forceRefresh;
 
-  const GetUserListByPageEvent({required this.page});
-}
-
-class RefreshUserListEvent extends GetUserListEvent {
-  const RefreshUserListEvent();
+  const GetUserListByPageEvent({
+    required this.page,
+    this.forceRefresh,
+  });
 }

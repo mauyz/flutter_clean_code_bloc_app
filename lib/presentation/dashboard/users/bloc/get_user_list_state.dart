@@ -1,28 +1,46 @@
 part of 'get_user_list_bloc.dart';
 
 abstract class GetUserListState extends Equatable {
-  const GetUserListState();
+  final Map<int, List<User>> usersMap;
+  final int page;
+
+  const GetUserListState({
+    required this.usersMap,
+    required this.page,
+  });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [usersMap, page];
 }
 
 class GetUserListInitial extends GetUserListState {
-  const GetUserListInitial();
+  GetUserListInitial()
+      : super(
+          usersMap: <int, List<User>>{},
+          page: 1,
+        );
 }
 
 class GetUserListLoading extends GetUserListState {
-  const GetUserListLoading();
+  const GetUserListLoading({
+    required super.usersMap,
+    required super.page,
+  });
 }
 
-class GetUserListSuccess extends GetUserListState {
-  final List<User> users;
-
-  const GetUserListSuccess({required this.users});
+class GetUserListLoaded extends GetUserListState {
+  const GetUserListLoaded({
+    required super.usersMap,
+    required super.page,
+  });
 }
 
 class GetUserListFailed extends GetUserListState {
   final Failure failure;
 
-  const GetUserListFailed({required this.failure});
+  const GetUserListFailed({
+    required this.failure,
+    required super.usersMap,
+    required super.page,
+  });
 }
