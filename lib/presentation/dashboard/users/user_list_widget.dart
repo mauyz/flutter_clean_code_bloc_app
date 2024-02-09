@@ -54,7 +54,7 @@ class UserListWidget extends StatelessWidget {
                 child: ResponsiveWidget(
                   mobile: UserListGridView(
                     users: users,
-                    crossAxisCount: size.width < 650 ? 2 : 4,
+                    crossAxisCount: size.width < 500 ? 2 : 3,
                     childAspectRatio:
                         size.width < 650 && size.width > 350 ? 1.3 : 1,
                   ),
@@ -62,7 +62,10 @@ class UserListWidget extends StatelessWidget {
                     users: users,
                     childAspectRatio: size.width < 1400 ? 1.1 : 1.4,
                   ),
-                  tablet: UserListGridView(users: users),
+                  tablet: UserListGridView(
+                    users: users,
+                    crossAxisCount: 4,
+                  ),
                 ),
               ),
               Padding(

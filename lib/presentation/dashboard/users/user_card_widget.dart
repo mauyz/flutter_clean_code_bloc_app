@@ -1,4 +1,5 @@
 import 'package:cross_platform_app/domain/entities/user.dart';
+import 'package:cross_platform_app/presentation/widgets/custom/network_avatar_rounded.dart';
 import 'package:flutter/material.dart';
 
 class UserCardWidget extends StatelessWidget {
@@ -16,10 +17,8 @@ class UserCardWidget extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: Image.network(
-                user.profilepicture!,
-                height: 50,
-                width: 50,
+              child: NetworkAvatarRounded(
+                user: user,
               ),
             ),
           ),
