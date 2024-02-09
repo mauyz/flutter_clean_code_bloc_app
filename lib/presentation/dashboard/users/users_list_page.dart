@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cross_platform_app/presentation/dashboard/users/bloc/get_user_list_bloc.dart';
 import 'package:cross_platform_app/presentation/dashboard/users/refresh_user_list_widget.dart';
 import 'package:cross_platform_app/presentation/dashboard/users/user_list_widget.dart';
-import 'package:cross_platform_app/presentation/widgets/text/error_text_widget.dart';
+import 'package:cross_platform_app/presentation/widgets/custom/error_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
