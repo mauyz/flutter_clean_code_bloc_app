@@ -22,6 +22,8 @@ class UserListGridView extends StatelessWidget {
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
         childAspectRatio: childAspectRatio,
+        mainAxisSpacing: 10.0,
+        crossAxisSpacing: 5.0,
       ),
       itemBuilder: (_, index) {
         return UserCardWidget(user: users[index]);

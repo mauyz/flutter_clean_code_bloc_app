@@ -6,3 +6,9 @@ class ApiConstants {
   static const getUserById = "/users/";
   static const getUserList = "/users?page=";
 }
+
+enum ApiMethod {
+  get,
+  post,
+  put,
+}

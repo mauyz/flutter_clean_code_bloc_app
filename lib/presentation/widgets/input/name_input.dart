@@ -1,3 +1,4 @@
+import 'package:cross_platform_app/presentation/styles/decorations.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -12,16 +13,9 @@ class NameInput extends StatelessWidget {
         ValidationMessage.required: (_) => 'The name must not be empty',
       },
       textInputAction: TextInputAction.next,
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(8),
-          ),
-        ),
-        labelText: "Name",
-        prefixIcon: Icon(
-          Icons.person,
-        ),
+      decoration: Decorations.roundedBorderInpuitDecoration(
+        "Name",
+        prefixIcon: Icons.person,
       ),
     );
   }

@@ -42,7 +42,7 @@ class RemoteUserSourceImpl implements RemoteUserSource {
         name: dataMap["Name"] as String,
       );
     } else {
-      throw ApiException(code: ErrorConstants.inputIncorrect);
+      throw const ApiException(code: ErrorConstants.inputIncorrect);
     }
   }
 
@@ -61,7 +61,7 @@ class RemoteUserSourceImpl implements RemoteUserSource {
     if (json['data'] != null) {
       return login(data['email'], data['password']);
     } else {
-      throw ApiException(code: ErrorConstants.alreadyInUse);
+      throw const ApiException(code: ErrorConstants.alreadyInUse);
     }
   }
 
@@ -71,13 +71,13 @@ class RemoteUserSourceImpl implements RemoteUserSource {
       endPoint: '${ApiConstants.getUserById}$id',
     );
     if (result == "1") {
-      throw ApiException(code: ErrorConstants.notFound);
+      throw const ApiException(code: ErrorConstants.notFound);
     } else {
       final data = Map<String, dynamic>.from(jsonDecode(result));
       if (!data.containsKey("message")) {
         return UserModel.fromJson(data);
       } else {
-        throw ApiException(code: ErrorConstants.requestInvalid);
+        throw const ApiException(code: ErrorConstants.requestInvalid);
       }
     }
   }
@@ -97,7 +97,7 @@ class RemoteUserSourceImpl implements RemoteUserSource {
           )
           .toList();
     } else {
-      throw ApiException(code: ErrorConstants.inputIncorrect);
+      throw const ApiException(code: ErrorConstants.inputIncorrect);
     }
   }
 }

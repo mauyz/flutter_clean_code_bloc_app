@@ -1,3 +1,4 @@
+import 'package:cross_platform_app/presentation/styles/decorations.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -20,16 +21,9 @@ class _ConfirmPasswordInputState extends State<ConfirmPasswordInput> {
             'The password confirmation does not match on the password',
       },
       textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(8),
-          ),
-        ),
-        labelText: "Confirm password",
-        prefixIcon: const Icon(
-          Icons.lock,
-        ),
+      decoration: Decorations.roundedBorderInpuitDecoration(
+        "Confirm password",
+        prefixIcon: Icons.lock,
         suffixIcon: TextButton(
           onPressed: () {
             if (mounted) {
@@ -40,7 +34,6 @@ class _ConfirmPasswordInputState extends State<ConfirmPasswordInput> {
             obscurePassword ? Icons.visibility_off : Icons.visibility,
           ),
         ),
-        errorMaxLines: 2,
       ),
     );
   }

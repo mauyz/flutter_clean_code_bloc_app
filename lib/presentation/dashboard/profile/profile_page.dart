@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cross_platform_app/domain/entities/user.dart';
 import 'package:cross_platform_app/presentation/dashboard/profile/bloc/get_user_bloc.dart';
 import 'package:cross_platform_app/presentation/responsive_widget.dart';
+import 'package:cross_platform_app/presentation/widgets/custom/error_text_widget.dart';
+import 'package:cross_platform_app/presentation/widgets/custom/network_avatar_rounded.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,12 +25,8 @@ class ProfilePage extends StatelessWidget {
       builder: (_, state) {
         if (state is GetUserFailed) {
           return Center(
-            child: Text(
-              state.failure.message,
-              style: const TextStyle(
-                fontSize: 15.0,
-                color: Colors.red,
-              ),
+            child: ErrorTextWidget(
+              text: state.failure.message,
             ),
           );
         }
@@ -36,6 +34,7 @@ class ProfilePage extends StatelessWidget {
           final profile = state.user;
           return Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
                 padding: ResponsiveWidget.isMobile(context)
@@ -50,14 +49,11 @@ class ProfilePage extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Center(
-                          child: CircleAvatar(
-                            radius: 120,
-                            backgroundImage: NetworkImage(
-                              profile.profilepicture!,
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: NetworkAvatarRounded(
+                            user: profile,
                           ),
                         ),
                         const SizedBox(
@@ -81,6 +77,18 @@ class ProfilePage extends StatelessWidget {
                           ),
                           textAlign: TextAlign.center,
                         ),
+                        if (profile.location != null)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Text(
+                              profile.location!,
+                              style: const TextStyle(
+                                fontSize: 15.0,
+                                fontStyle: FontStyle.italic,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                       ],
                     ),
                   ),

@@ -39,28 +39,38 @@ class ApiClient {
     );
   }
 
-  Future<String> postData({
+  Future<String> _request({
     required String endPoint,
+    required ApiMethod method,
     Map<String, dynamic>? params,
   }) async {
     try {
-      final result = await dio.post<String>(
-        endPoint,
-        data: params,
-      );
-
+      final result = switch (method) {
+        ApiMethod.get => await dio.get<String>(
+            endPoint,
+            data: params,
+          ),
+        ApiMethod.post => await dio.post<String>(
+            endPoint,
+            data: params,
+          ),
+        ApiMethod.put => await dio.put<String>(
+            endPoint,
+            data: params,
+          ),
+      };
       if (result.statusCode == 200) {
         final data = result.data;
         if (data != null) {
           return data;
         } else {
-          throw ApiException(
+          throw const ApiException(
             code: ErrorConstants.dataIncorrect,
           );
         }
       }
       if (result.statusCode == 401) {
-        throw ApiException(
+        throw const ApiException(
           code: ErrorConstants.tokenInvalid,
         );
       }
@@ -70,43 +80,44 @@ class ApiClient {
           code: e.response!.statusCode!,
         );
       }
+      if (e.message?.contains("Failed host lookup") == true) {
+        throw const ApiException(code: ErrorConstants.connexionError);
+      }
     }
-    throw UnknownException;
+    throw const UnknownException();
+  }
+
+  Future<String> postData({
+    required String endPoint,
+    Map<String, dynamic>? params,
+  }) {
+    return _request(
+      endPoint: endPoint,
+      params: params,
+      method: ApiMethod.post,
+    );
   }
 
   Future<String> getData({
     required String endPoint,
     Map<String, dynamic>? params,
-  }) async {
-    try {
-      final result = await dio.get<String>(
-        endPoint,
-        data: params,
-      );
+  }) {
+    return _request(
+      endPoint: endPoint,
+      params: params,
+      method: ApiMethod.get,
+    );
+  }
 
-      if (result.statusCode == 200) {
-        final data = result.data;
-        if (data != null) {
-          return data;
-        } else {
-          throw ApiException(
-            code: ErrorConstants.dataIncorrect,
-          );
-        }
-      }
-      if (result.statusCode == 401) {
-        throw ApiException(
-          code: ErrorConstants.tokenInvalid,
-        );
-      }
-    } on DioException catch (e) {
-      if (e.response?.statusCode != null) {
-        throw ApiException(
-          code: e.response!.statusCode!,
-        );
-      }
-    }
-    throw UnknownException;
+  Future<String> putData({
+    required String endPoint,
+    Map<String, dynamic>? params,
+  }) {
+    return _request(
+      endPoint: endPoint,
+      params: params,
+      method: ApiMethod.put,
+    );
   }
 
   Future saveToken(String token) async {
